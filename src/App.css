@@ -206,3 +206,8 @@ header .link{
 .moviedetails{
   color: white;
 }
+.movie > div{
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}

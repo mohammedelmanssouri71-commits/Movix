@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": "b63b",
+      "username": "bvvb",
+      "role": "Admin"
+    },
+    {
+      "id": "26a4",
+      "username": "vbdgf",
+      "role": "Admin"
+    },
+    {
+      "id": "0e7f",
+      "username": "edqef",
+      "role": "Admin"
+    },
+    {
+      "id": "512f",
+      "username": "Hook",
+      "role": "Super Admin"
+    }
+  ]
+}
