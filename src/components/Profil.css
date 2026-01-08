@@ -1,0 +1,50 @@
+.profil-card {
+  width: 260px;
+  background: #111;
+  color: #fff;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* Image profil */
+.profil-card img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #e50914;
+  margin-bottom: 12px;
+}
+
+/* Nom */
+.profil-card h3 {
+  margin: 6px 0 2px;
+  font-size: 1.2rem;
+}
+
+/* Username */
+.profil-card p {
+  margin: 0;
+  color: #aaa;
+  font-size: 0.9rem;
+}
+
+/* Bouton settings */
+.settings-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  padding: 8px;
+  border-radius: 50%;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.settings-btn:hover {
+  background: #e50914;
+  transform: rotate(45deg);
+}
