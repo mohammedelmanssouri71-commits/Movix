@@ -1,4 +1,5 @@
-import moviePicture from '../assets/game.jpg'
+import moviePicture from '../assets/game.jpg';
+import { Link } from 'react-router-dom';
 
 export default function MovieCard({movie}){
     // let labels = movie.genres.map(g => <p className='label'>{g.name}</p>);
@@ -16,7 +17,7 @@ export default function MovieCard({movie}){
     
     return (
         <div className='movie-card' key={movie.id}>
-            <img src={movie.backdrop_path ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}.` : `https://image.tmdb.org/t/p/w500${movie.poster_path}.`} alt="cover"/>
+            <Link to={`/movies-details/${movie.id}`}><img src={movie.backdrop_path ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}.` : `https://image.tmdb.org/t/p/w500${movie.poster_path}.`} alt="cover" loading='lazy'/></Link>
             <div className='movie-details'>
                 <h3>{movie.title}</h3>
                 <p className='senarist'>{movie.release_date}</p>
