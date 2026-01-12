@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar';
 import MovieDetails from './components/MovieDetails';
 import { useEffect, useRef, useState } from 'react';
 import FavoriteList from './components/FavoritesList';
+import TvShowsList from './components/TvShowsList';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/movies' element={<MoviesList/>}/>
           <Route path='/movies-details/:id' element={<MovieDetails/>}/>
           <Route path='/favorites' element={<FavoriteList/>}/>
+          <Route path='/tv-shows' element={<TvShowsList/>}/>
         </Routes>
       </main>
     </div>

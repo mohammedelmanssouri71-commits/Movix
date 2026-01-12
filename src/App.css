@@ -521,3 +521,101 @@ main{
   background: #7c3aed;
   border-radius: 10px;
 }
+/* === Container général === */
+.favorite-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+  justify-content: center;
+  background-color: #1e1e2f; /* dark background */
+  min-height: 100vh;
+  color: #eee;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* === Card de favori === */
+.favorite-card {
+  background: linear-gradient(145deg, #2a2a42, #1c1c2b);
+  border: 1px solid #3a3a5a;
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  transition: transform 0.2s, box-shadow 0.2s;
+  height: fit-content;
+}
+
+.favorite-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.6);
+}
+
+/* Image */
+.favorite-card img {
+  width: 100px;
+  height: 180px;
+  object-fit: cover;
+}
+
+/* Texte */
+.favorite-card div {
+  padding: 12px;
+}
+
+.favorite-card h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: blueviolet;
+}
+
+.favorite-card p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Bouton delete */
+.favorite-card button {
+  margin: 12px;
+  padding: 6px 12px;
+  background-color: blueviolet;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+  height: fit-content;
+}
+
+.favorite-card button:hover {
+  background-color: rebeccapurple;
+  transform: scale(1.05);
+}
+
+/* === NotFoundFav === */
+.not-found-fav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  color: #ccc;
+  border: 2px dashed #4b3a7a;
+  border-radius: 16px;
+  background-color: #1c1c2b;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.not-found-fav h2 {
+  font-size: 2rem;
+  margin-bottom: 12px;
+  color: blueviolet;
+}
+
+.not-found-fav p {
+  font-size: 1rem;
+  color: #aaa;
+}

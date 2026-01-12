@@ -3,12 +3,14 @@ import MovieCard from "./MovieCard";
 
 
 export default function MoviesList(){
-    const apiKey = '078720dca783d28602bfaaaff5501bdf';
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const APP_MODE = process.env.REACT_APP_MODE;
     const [category, setCategory] = useState("top_rated");
 
     const [movies, setMovies] = useState([]); 
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${category}?api_key=${apiKey}`)
+        fetch(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`)
         .then(response => response.json())
         .then(data => {
             setMovies(data.results); 
@@ -21,6 +23,7 @@ export default function MoviesList(){
     const moviesList = movies.map(m => <MovieCard movie={m} key={m.id}/>)
     return (
         <div className="movie-list">
+            <h1 style={{color: "red"}}>{APP_MODE}</h1>
             <select onChange={handleCat}>
                 <option value={"top_rated"}>Top rated</option>
                 <option value={"popular"}>Popular</option>

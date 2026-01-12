@@ -1,4 +1,23 @@
 {
   "users": [],
-  "favorites": []
+  "favorites": [
+    {
+      "id": "313a",
+      "userId": 1,
+      "type": "movie",
+      "typeId": 155
+    },
+    {
+      "id": "a0c8",
+      "userId": 1,
+      "type": "movie",
+      "typeId": 372058
+    },
+    {
+      "id": "1ecb",
+      "userId": 1,
+      "type": "movie",
+      "typeId": 122
+    }
+  ]
 }

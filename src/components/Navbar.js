@@ -10,7 +10,7 @@ export default function Navbar(){
             <h1>Movix</h1>
             <nav>
                 <button><Link to="/movies" className="link">Movies</Link></button>
-                <button><Link className="link">TV Shows</Link></button>
+                <button><Link to="/tv-shows" className="link">TV Shows</Link></button>
                 <button><Link className="link">Series</Link></button>
                 <button><Link className="link">Animes</Link></button>
             </nav>

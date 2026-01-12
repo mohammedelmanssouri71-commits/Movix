@@ -4,33 +4,37 @@ import { Link } from "react-router-dom";
 import Cast from "./Cast";
 import AsideDetails from "./AsideDetails";
 
-export default function MovieDetails(){
+export default function MovieDetails(){ 
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    const BASE_URL = process.env.REACT_APP_BASE_URL;
+    const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL;
+
     const {id} = useParams();
-    const API_KEY = '078720dca783d28602bfaaaff5501bdf';
     const [movie, setMovie] = useState({});
     const [credits, setCredits] = useState({});
     const [crew, setCrew] = useState([]);
     const principalJobs = ['Director', "Writer", "Screenplay", "Story", "Producer"];
-    // const [genres, setGenres] = useState([]);
     useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}?api_key=${API_KEY}`)
-        .then(res => res.json())
-        .then(data => {
-            setMovie(data);
-        })
-    },[])
-    useEffect(() => {
-        fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${API_KEY}`)
-        .then(res => res.json())
-        .then(data => {
-            setCredits(data);
-            setCrew(data.crew.filter(c => principalJobs.includes(c.job)))
-        })
-    })
-    useEffect(() => {
-        // console.log(movie);
-        // console.log(movie.genres)
-    }, [movie])
+
+        Promise.all([
+            fetch(`${BASE_URL}/movie/${id}?api_key=${API_KEY}`)
+            .then(res => res.json()),
+
+            fetch(`${BASE_URL}/movie/${id}/credits?api_key=${API_KEY}`)
+            .then(res => res.json())
+        ])
+            .then(([movieData, creditsData]) => {
+            setMovie(movieData);
+            setCredits(creditsData);
+
+            setCrew(creditsData.crew.filter(c => principalJobs.includes(c.job)));
+            })
+            .catch(error => {
+            console.error("Erreur API :", error);
+            })
+
+}, [id, API_KEY]);
+
 
     const uniqueCrew = Object.values(
         crew.reduce((acc, cur) => {
@@ -47,10 +51,10 @@ export default function MovieDetails(){
 
     return (
         <div className="movie">
-            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path})`}}>
-                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}.`} alt="poster" loading="lazy"/></a>
+            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`}}>
+                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt="poster" loading="lazy"/></a>
                 <div className="details">
-                    <h2>{movie.title} -{new Date(movie.release_date).getFullYear()}-</h2>
+                    <h2>{movie.title} -{movie.release_date && new Date(movie.release_date).getFullYear()}-</h2>
                     <div className="general-infos">
                         <div className="labels">
                             {movie.genres && movie.genres.map((g,index) => <span key={index} className="label">{g.name}</span>)}
@@ -93,7 +97,7 @@ export default function MovieDetails(){
                 <button className="btn-return"><Link to={"/movies"} className="link"><i class="fa-solid fa-arrow-left"></i>All movies</Link></button>
             </div>
             <div>
-                <Cast cast={credits.cast}/>
+                <Cast cast={credits.cast || []}/>
                 <AsideDetails/>
             </div>
         </div>

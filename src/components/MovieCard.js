@@ -6,6 +6,8 @@ import axios from 'axios';
 import { type } from '@testing-library/user-event/dist/type';
 
 export default function MovieCard({movie}){
+    const JSON_API_URL = process.env.REACT_APP_JSON_API_URL;
+
     const dispatch = useDispatch();
     let review = Number((movie.vote_average / 2).toFixed(2));
     let stars = [];
@@ -20,7 +22,7 @@ export default function MovieCard({movie}){
     }
     async function addFav(movie) {
         try {
-            const res = await axios.post("http://localhost:3001/favorites", {userId: 1, type: "movie", typeId: movie.id});
+            const res = await axios.post(`${JSON_API_URL}/favorites`, {userId: 1, type: "movie", typeId: movie.id});
             dispatch(addFavorite({userId: 1, type: "movie", typeId: movie.id}));
         } catch (error) {
             console.log(error);
