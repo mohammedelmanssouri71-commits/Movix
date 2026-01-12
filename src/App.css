@@ -49,6 +49,10 @@ header .link{
   color: white;
   margin: 0px 5px;
 }
+main{
+  margin: 50px 0 50px 70px;
+  padding-right: 50px;
+}
 .sidebar{
   position: fixed;
   top: 50%;
@@ -170,7 +174,6 @@ header .link{
 .labels {
   display: flex;
   gap: 6px;
-  margin-top: 8px;
   flex-wrap: wrap;
 }
 
@@ -206,8 +209,315 @@ header .link{
 .moviedetails{
   color: white;
 }
-.movie > div{
+.movie > div:first-child {
   display: flex;
-  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px 60px;
+
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+
+  position: relative;
+  color: #fff;
+}
+
+/* Overlay sombre */
+.movie > div:first-child::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(13, 0, 26, 0.95),
+    rgba(13, 0, 26, 0.75)
+  );
+  z-index: 1;
+}
+
+/* Tout le contenu au-dessus de l’overlay */
+.movie > div:first-child > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* Poster */
+.movie img {
+  width: 260px;
+  height: 390px;
+  object-fit: cover;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  transition: transform 0.3s ease;
+}
+
+.movie >div:first-child img:hover {
+  transform: scale(1.05);
+}
+.movie .general-infos{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.movie .original-country{
+  padding: 2px;
+  border: 1px solid white;
+  font-weight: 100;
+} 
+.movie .general-infos > span{
+  width: 5px;
+  height: 5px;
+  background-color: white;
+  border-radius: 50%;
+}
+/* Zone détails */
+.movie .details {
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Titre */
+.movie h2 {
+  font-family: "Caesar Dressing", system-ui;
+  font-size: 2.5rem;
+  letter-spacing: 1px;
+}
+/* Tagline */
+.movie .tagline {
+  font-style: italic;
+  color: #c9c9c9;
+}
+
+/* Synopsis */
+.movie .synopsis h3 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.movie .synopsis p {
+  line-height: 1.7;
+  color: #e1e1e1;
+  font-weight: 300;
+}
+
+/* Crew */
+.movie .crew {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+
+.movie .crew h3 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+}
+
+.movie .crew p {
+  font-size: 0.85rem;
+  color: #bdbdbd;
+}
+
+/* Actions */
+.movie > div > div:last-child {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-left: auto;
+}
+
+/* Boutons */
+.movie button {
+  padding: 12px 18px;
+  border-radius: 30px;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+.movie .actions button{
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 50%;
+  padding: 0;
+  margin-bottom: 15px;
+}
+.movie button:hover, .movie .link:hover {
+  background: #fff;
+  color: #0d001a;
+  transform: translateY(-2px);
+}
+@media (max-width: 900px) {
+  .movie > div {
+    flex-direction: column;
+    padding: 30px;
+  }
+
+  .movie img {
+    width: 220px;
+    height: 330px;
+    margin: 0 auto;
+  }
+
+  .movie > div > div:last-child {
+    flex-direction: row;
+    justify-content: center;
+    margin-left: 0;
+    margin-top: 20px;
+  }
+}
+.movie .vote{
+  display: flex;
+  align-items: center;
   gap: 50px;
+}
+.movie .vote > div{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  /* width: 120px; */
+}
+.movie .vote > div > div{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: blueviolet;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.movie .vote > div > div p{
+  position: relative;
+  z-index: 10;
+}
+.movie .vote > div > div::before{
+  content: "";
+  position: absolute;
+  background-color: blueviolet;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+}
+.movie .btn-return{
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+}
+.movie .link{
+  text-decoration: none;
+  color: white;
+}
+.movie > div:last-child{
+  display: flex;
+}
+.general-details{
+  width: 400px;
+}
+
+
+.movie .cast {
+  margin-top: 50px;
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+.cast .cast-list {
+  display: flex;
+  gap: 24px;
+  padding: 20px;
+  align-items: center;
+}
+.cast .cast-card {
+  min-width: 180px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cast .cast-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+.cast .cast-card img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  display: block;
+}
+.cast .cast-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.1),
+    transparent
+  );
+}
+.cast .cast-card > div {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  padding: 12px;
+  width: 100%;
+  text-align: center;
+}
+
+.cast .cast-card h3 {
+  color: #fff;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.cast .cast-card p {
+  color: #cfcfcf;
+  font-size: 0.85rem;
+  margin-top: 4px;
+  font-family: "Caesar Dressing", system-ui;
+}
+.cast .link {
+  background: linear-gradient(135deg, #7c3aed, #4f46e5);
+  display: block;
+  border-radius: 12px;
+  padding: 14px 22px;
+  cursor: pointer;;
+}
+
+.cast .link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+}
+/* Firefox */
+.cast {
+  scrollbar-width: thin;
+  scrollbar-color: #7c3aed #1f2933;
+}
+
+/* Chrome / Edge / Safari */
+.cast::-webkit-scrollbar {
+  height: 8px;
+}
+
+.cast::-webkit-scrollbar-track {
+  background: #1f2933;
+  border-radius: 10px;
+}
+
+.cast::-webkit-scrollbar-thumb {
+  background: #7c3aed;
+  border-radius: 10px;
 }

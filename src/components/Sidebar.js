@@ -14,7 +14,7 @@ export default function Sidebar(){
                 <button onClick={() => setShowInp(!showInp)}><Link className="link"><i class="fa-solid fa-magnifying-glass"></i></Link></button>
                 <input ref={searchRef} type="search" style={showInp?{}:styleInp} placeholder="Search a movie"/>
             </div>
-            <button><Link className="link"><i class="fa-regular fa-bookmark"></i></Link></button>
+            <button><Link to="favorites" className="link"><i class="fa-regular fa-bookmark"></i></Link></button>
             <button><Link className="link"><i class="fa-solid fa-gear"></i></Link></button>
         </div>
     )
