@@ -9,7 +9,7 @@ export default function Sidebar(){
     }
     return (
         <div className="sidebar">
-            <button><Link className="link"><i class="fa-solid fa-house"></i></Link></button>
+            <button><Link className="link" to="/"><i class="fa-solid fa-house"></i></Link></button>
             <div className="container-search">
                 <button onClick={() => setShowInp(!showInp)}><Link className="link"><i class="fa-solid fa-magnifying-glass"></i></Link></button>
                 <input ref={searchRef} type="search" style={showInp?{}:styleInp} placeholder="Search a movie"/>

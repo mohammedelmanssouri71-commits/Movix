@@ -21,14 +21,14 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "set PORT=3009 && react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "go": "concurrently \"npm run start\" \"npm run server\"",
-    "server": "json-server --watch db.json --port 3002",
+    "server": "json-server --watch db.json --port 3001",
     "serve:prod": "serve -s build -l 3001",
-    "server:prod": "json-server --watch db.json --port 5000",
+    "server:prod": "json-server --watch db.json --port 3006",
     "go:prod": "npx concurrently \"npm run serve:prod\" \"npm run server:prod\""
   },
   "eslintConfig": {

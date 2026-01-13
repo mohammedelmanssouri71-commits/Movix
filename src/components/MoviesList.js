@@ -5,7 +5,6 @@ import MovieCard from "./MovieCard";
 export default function MoviesList(){
     const API_KEY = process.env.REACT_APP_API_KEY;
     const BASE_URL = process.env.REACT_APP_BASE_URL;
-    const APP_MODE = process.env.REACT_APP_MODE;
     const [category, setCategory] = useState("top_rated");
 
     const [movies, setMovies] = useState([]); 
@@ -23,7 +22,6 @@ export default function MoviesList(){
     const moviesList = movies.map(m => <MovieCard movie={m} key={m.id}/>)
     return (
         <div className="movie-list">
-            <h1 style={{color: "red"}}>{APP_MODE}</h1>
             <select onChange={handleCat}>
                 <option value={"top_rated"}>Top rated</option>
                 <option value={"popular"}>Popular</option>
