@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MovieCard from "./MovieCard";
+import logger from '../utils/logger';
 
 
 export default function MoviesList(){
@@ -8,13 +9,20 @@ export default function MoviesList(){
     const [category, setCategory] = useState("top_rated");
 
     const [movies, setMovies] = useState([]); 
-    useEffect(() => {
-        fetch(`${BASE_URL}/movie/${category}?api_key=${API_KEY}`)
+
+    function getMovies(){
+        const url = `${BASE_URL}/movie/${encodeURIComponent(category)}?api_key=${encodeURIComponent(API_KEY)}`;
+        fetch(url)
         .then(response => response.json())
         .then(data => {
             setMovies(data.results); 
+            logger.debug("Films récupérés", data);
         })
-        .catch(error => console.error('Erreur :', error));
+        .catch(error => logger.error("Erreur de récupération", error));
+    }
+    useEffect(() => {
+        logger.info("Récupération des films...");
+        getMovies();
     },[category])
     function handleCat(e){
         setCategory(e.target.value);
@@ -26,6 +34,7 @@ export default function MoviesList(){
                 <option value={"top_rated"}>Top rated</option>
                 <option value={"popular"}>Popular</option>
                 <option value={"upcoming"}>Upcoming</option>
+                <option value={"now_playing"}>Now Playing</option>
             </select>
             <h2>{category.toUpperCase().replaceAll("_", " ")}</h2>
             <div>

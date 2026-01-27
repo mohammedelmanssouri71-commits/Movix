@@ -1,11 +1,14 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Cast from "./Cast";
 import AsideDetails from "./AsideDetails";
+import Trailer from "./Trailer";
+import SimilarMovies from "./SimilarMovies";
 
 export default function MovieDetails(){ 
     const API_KEY = process.env.REACT_APP_API_KEY;
+    const API_KEY_YOUTUBE = process.env.REACT_APP_API_KEY_YOUTUBE;
     const BASE_URL = process.env.REACT_APP_BASE_URL;
     const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL;
 
@@ -13,7 +16,11 @@ export default function MovieDetails(){
     const [movie, setMovie] = useState({});
     const [credits, setCredits] = useState({});
     const [crew, setCrew] = useState([]);
+    const [showTrailer, setShowTrailer] = useState(false);
+    const [videoId, setVideoId] = useState(null);
     const principalJobs = ['Director', "Writer", "Screenplay", "Story", "Producer"];
+
+    const trailerContainer = useRef();
     useEffect(() => {
 
         Promise.all([
@@ -41,7 +48,21 @@ export default function MovieDetails(){
             acc[cur.id] ??= cur;
             return acc;
         }, {})
-        );
+    );
+    function handleTrailer(){
+        const query = movie.title + " Movie Officiel Trailer";
+        fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${query}&key=${API_KEY_YOUTUBE}`)
+    .then(res => res.json())
+    .then(data => setVideoId(data.items[0].id.videoId))
+    .finally(() => {
+        trailerContainer.current.style.display = "block";
+        setShowTrailer(true);
+    });
+    }
+    function handleClose(){
+        setShowTrailer(false);
+        trailerContainer.current.style.display = "none";
+    }
     function fromMinutesToHours(minutes) {
         const h = Math.floor(minutes / 60);
         const m = minutes % 60;
@@ -51,8 +72,8 @@ export default function MovieDetails(){
 
     return (
         <div className="movie">
-            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.poster_path})`}}>
-                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/w500${movie.backdrop_path}`} alt="poster" loading="lazy"/></a>
+            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path? movie.backdrop_path:movie.poster_path})`}}>
+                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/w500${movie.poster_path? movie.poster_path:movie.backdrop_path}`} alt="poster" loading="lazy"/></a>
                 <div className="details">
                     <h2>{movie.title} -{movie.release_date && new Date(movie.release_date).getFullYear()}-</h2>
                     <div className="general-infos">
@@ -92,14 +113,19 @@ export default function MovieDetails(){
                 <div className="actions">
                     <button><i class="fa-solid fa-list"></i></button>
                     <button><i class="fa-solid fa-heart"></i></button>
-                    <button><i class="fa-solid fa-play"></i></button>
+                    <button onClick={handleTrailer}><i class="fa-solid fa-play"></i></button>
+                    <button className="btn-return"><Link to={"/movies"} className="link"><i class="fa-solid fa-arrow-left"></i></Link></button>
                 </div>
-                <button className="btn-return"><Link to={"/movies"} className="link"><i class="fa-solid fa-arrow-left"></i>All movies</Link></button>
+            </div>
+            <div className="trailer" ref={trailerContainer}>
+                {showTrailer && <Trailer videoId={videoId}/>}
+                <button className="close-btn" onClick={handleClose}><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div>
                 <Cast cast={credits.cast || []}/>
                 <AsideDetails/>
             </div>
+            <SimilarMovies movie_id={id}/>
         </div>
     )
 }

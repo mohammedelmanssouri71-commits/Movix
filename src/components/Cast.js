@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 export default function Cast({cast}){
     const castList = cast ? cast.slice(0,10).map(c => {
         return (
-            <div key={c.cast_id} className="cast-card">
+            <div key={c.credit_id} className="cast-card">
                 <img src={c.profile_path ? `https://image.tmdb.org/t/p/w185${c.profile_path}` : null} alt="actor"/>
                 <div>
                     <h3>{c.name}</h3>

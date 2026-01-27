@@ -24,6 +24,9 @@ header{
   padding: 10px 20px;
   box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 4px;
 }
+header h1{
+  font-family: "Sekuya", system-ui;
+}
 header img{
   width: 40px;
   height: 40px;
@@ -49,6 +52,12 @@ header .link{
   color: white;
   margin: 0px 5px;
 }
+header .ai-picks{
+  background-color: blueviolet;
+  color: white;
+  border-radius: 20px;
+  padding: 10px 20px;
+}
 main{
   margin: 50px 0 50px 70px;
   padding-right: 50px;
@@ -61,6 +70,11 @@ main{
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 4px;
+  z-index: 20;
+  padding: 10px;
+  border-radius: 20px;
+  /* background-color: #121212; */
 }
 .sidebar button{
   background-color: transparent;
@@ -76,7 +90,7 @@ main{
   font-size: 20px;
 }
 .sidebar input{
-  padding: 7px 10px;
+  padding: 10px;
   border: 1px solid rgb(180, 180, 180);
   border-radius: 20px;
   width: 300px;
@@ -212,7 +226,7 @@ main{
 .movie > div:first-child {
   display: flex;
   align-items: flex-start;
-  gap: 40px;
+  justify-content: space-between;
   padding: 40px 60px;
 
   background-position: center;
@@ -323,16 +337,8 @@ main{
   color: #bdbdbd;
 }
 
-/* Actions */
-.movie > div > div:last-child {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-left: auto;
-}
-
 /* Boutons */
-.movie button {
+.movie  button {
   padding: 12px 18px;
   border-radius: 30px;
   border: none;
@@ -350,6 +356,7 @@ main{
   border-radius: 50%;
   padding: 0;
   margin-bottom: 15px;
+  display: block;
 }
 .movie button:hover, .movie .link:hover {
   background: #fff;
@@ -408,17 +415,9 @@ main{
   height: 55px;
   border-radius: 50%;
 }
-.movie .btn-return{
-  position: absolute;
-  left: 20px;
-  bottom: 20px;
-}
 .movie .link{
   text-decoration: none;
   color: white;
-}
-.movie > div:last-child{
-  display: flex;
 }
 .general-details{
   width: 400px;
@@ -618,4 +617,108 @@ main{
 .not-found-fav p {
   font-size: 1rem;
   color: #aaa;
+}
+.trailer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.9); /* Fond sombre */
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  display: none;
+}
+.trailer .close-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #fff;
+  color: #000;
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1010;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.trailer .close-btn:hover {
+  background: blueviolet;
+  color: white;
+  transform: scale(1.1);
+}
+
+.similar-movies{
+  margin-top: 50px;
+}
+.similar-movies > div{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 50px;
+}
+.similar-movies button{
+  padding: 0;
+}
+.search-card{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-radius: 20px;
+  box-shadow: rgba(255, 255, 255, 0.16) 0px 1px 4px;
+  margin: 20px auto;
+  width: 80%;
+  padding: 20px;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+/* .search-card::after{
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(63, 0, 122, 0.5);
+  z-index: 10;
+}
+.search-card > *{
+  position: relative;
+  z-index: 12;
+} */
+.search-card img{
+  display: block;
+  width: 150px;
+  height: 180px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+}
+.search-card span{
+  color: grey;
+}
+.search-card > div > div{
+  margin-bottom: 20px;
+}
+.search-card p{
+  text-align: justify;
+}
+.search-card .link{
+  text-decoration: none;
+  color: white;
+  font-family: "Caesar Dressing", system-ui;
+}
+.loader{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid white;
 }

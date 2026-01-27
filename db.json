@@ -2,22 +2,22 @@
   "users": [],
   "favorites": [
     {
-      "id": "313a",
+      "id": "689d",
       "userId": 1,
       "type": "movie",
-      "typeId": 155
+      "typeId": 497370
     },
     {
-      "id": "a0c8",
+      "id": "ca21",
       "userId": 1,
       "type": "movie",
-      "typeId": 372058
+      "typeId": 11332
     },
     {
-      "id": "1ecb",
+      "id": "17b4",
       "userId": 1,
-      "type": "movie",
-      "typeId": 122
+      "type": "tv",
+      "typeId": 94605
     }
   ]
 }

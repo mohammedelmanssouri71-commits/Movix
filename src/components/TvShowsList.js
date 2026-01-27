@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-        import MovieCard from "./MovieCard";
+import TvShowCard from "./TvShowCard";
 
 export default function TvShowsList(){
     const API_KEY = process.env.REACT_APP_API_KEY;
@@ -18,7 +18,7 @@ export default function TvShowsList(){
     function handleCat(e){
         setCategory(e.target.value);
     }
-    const moviesList = movies.map(m => <MovieCard movie={m} key={m.id}/>)        
+    const moviesList = movies.map(tv => <TvShowCard tv={tv} key={tv.id}/>)        
     return (
     
                 <div className="movie-list">
@@ -26,6 +26,7 @@ export default function TvShowsList(){
                         <option value={"top_rated"}>Top rated</option>
                         <option value={"popular"}>Popular</option>
                         <option value={"airing_today"}>Airing Today</option>
+                        <option value={"on_the_air"}>On The Air</option>
                     </select>
                     <h2>{category.toUpperCase().replaceAll("_", " ")}</h2>
                     <div>
