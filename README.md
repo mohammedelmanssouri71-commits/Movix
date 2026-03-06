@@ -66,3 +66,33 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/a
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
 
+
+## Mock API authentication (JWT)
+
+This project now uses a mock API powered by `json-server` + `json-server-auth`.
+
+### Endpoints
+
+- `POST /register`
+- `POST /login`
+
+Both endpoints return an `accessToken` and `user` object when successful.
+
+### Protected resources
+
+The following resources are protected and require:
+
+`Authorization: Bearer <accessToken>`
+
+- `/users`
+- `/favorites`
+- `/comments`
+- `/lists` (and `/list`)
+
+### Run mock API
+
+```bash
+npm run server
+```
+
+This starts `server.js` on port `3001` by default.

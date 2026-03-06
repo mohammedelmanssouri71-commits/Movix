@@ -5,7 +5,7 @@ import MoviesList from './components/MoviesList';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
 import MovieDetails from './components/MovieDetails';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FavoriteList from './components/FavoritesList';
 import TvShowsList from './components/TvShowsList';
@@ -17,6 +17,7 @@ import PopularPersons from './components/PopularPersons';
 import Photos from './components/Photos';
 import Settings from './components/Settings';
 import { UserContext } from './contexts/UserContext';
+import { authFetch, clearAuthSession, USER_ID_KEY } from './utils/auth';
 import Register from './components/Auth/Register';
 import Login from './components/Auth/Login';
 import NotFound from './components/NotFound';
@@ -30,13 +31,22 @@ function App() {
 
   const navigate = useNavigate();
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem(USER_ID_KEY);
     if (userId){
-      fetch(`${JSON_API_URL}/users/${userId}`)
+      authFetch(`${JSON_API_URL}/users/${userId}`)
       .then(res => res.json())
       .then(data => {
-        console.log(data);
-        setUser(data);
+        if (data?.id) {
+          setUser(data);
+          return;
+        }
+
+        clearAuthSession();
+        navigate("/login");
+      })
+      .catch(() => {
+        clearAuthSession();
+        navigate("/login");
       })
     }else{
       navigate("/movies");
