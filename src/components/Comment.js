@@ -4,17 +4,18 @@ import Loader from "./Loader";
 import { useDispatch } from "react-redux";
 import { toggleLike } from "../slices/commentsSlice";
 import axios from "axios";
+import { authFetch } from "../utils/auth";
 
 
 export default function Comment({comment}){
     const JSON_API_URL = process.env.REACT_APP_JSON_API_URL;
-    const {user, setUser} = useContext(UserContext);
+    const {user} = useContext(UserContext);
     const [userComment, setUserComment] = useState({});
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
     useEffect(() => {
-        fetch(`${JSON_API_URL}/users/${comment.userId}`)
+        authFetch(`${JSON_API_URL}/users/${comment.userId}`)
         .then(res => res.json())
         .then(data => {
             setUserComment(data);

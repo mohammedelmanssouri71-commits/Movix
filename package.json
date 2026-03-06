@@ -9,7 +9,9 @@
     "@testing-library/react": "^16.3.1",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.13.2",
-    "express": "^5.2.1",
+    "express": "^4.22.1",
+    "json-server": "^0.17.4",
+    "json-server-auth": "^2.1.0",
     "loglevel": "^1.9.2",
     "openai": "^6.16.0",
     "react": "^19.2.3",
@@ -29,9 +31,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "go": "concurrently \"npm run start\" \"npm run server\"",
-    "server": "json-server --watch db.json --port 3001",
+    "server": "node server.js",
     "serve:prod": "serve -s build -l 3001",
-    "server:prod": "json-server --watch db.json --port 3006",
+    "server:prod": "PORT=3006 node server.js",
     "go:prod": "npx concurrently \"npm run serve:prod\" \"npm run server:prod\""
   },
   "eslintConfig": {
@@ -55,7 +57,6 @@
   "devDependencies": {
     "@types/react": "^19.2.7",
     "concurrently": "^9.2.1",
-    "json-server": "^1.0.0-beta.3",
     "serve": "^14.2.5"
   }
 }

@@ -1,70 +1,158 @@
-# Getting Started with Create React App
+# Movix 🎬
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Movix est une application web React dédiée à la découverte de films et séries : tendances du moment, recherche, fiches détaillées, favoris, commentaires et recommandations personnalisées.
 
-## Available Scripts
+## 1) Cloner le projet depuis GitHub
 
-In the project directory, you can run:
+```bash
+git clone <URL_DU_REPO_GITHUB>
+cd Movix
+```
 
-### `npm start`
+Exemple :
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```bash
+git clone https://github.com/<votre-org>/<votre-repo>.git
+cd Movix
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 2) Installer les dépendances
 
-### `npm test`
+```bash
+npm install
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 3) Variables d'environnement
 
-### `npm run build`
+Créez un fichier `.env` (ou `.env.local`) à la racine du projet avec les clés suivantes :
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```env
+REACT_APP_API_KEY=your_tmdb_api_key
+REACT_APP_BASE_URL=https://api.themoviedb.org/3
+REACT_APP_IMAGE_BASE_URL=https://image.tmdb.org/t/p/original
+REACT_APP_API_KEY_YOUTUBE=your_youtube_api_key
+REACT_APP_JSON_API_URL=http://localhost:3001
+REACT_APP_OPENAI_API_KEY=your_openai_api_key
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+> `REACT_APP_OPENAI_API_KEY` est utilisée par le composant AI Picks (fonctionnalité expérimentale).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 4) Lancer le projet
 
-### `npm run eject`
+### Option recommandée (front + API mock en même temps)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+npm run go
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- Front React : `http://localhost:3000`
+- API mock (auth + données locales) : `http://localhost:3001`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Option en 2 terminaux
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Terminal 1 (front) :
 
-## Learn More
+```bash
+npm start
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Terminal 2 (API mock) :
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```bash
+npm run server
+```
 
-### Code Splitting
+## 5) Fonctionnalités du site
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Accueil / Dashboard personnalisé** : carrousel de recommandations selon les préférences utilisateur + section Trending.
+- **Catalogue films** : navigation par catégories (Top Rated, Popular, Upcoming, Now Playing).
+- **Catalogue séries TV** : liste des séries populaires.
+- **Détails d’un film/série** : synopsis, genres, casting, vidéos trailer, suggestions similaires.
+- **Recherche globale** : recherche multi-contenu (films, séries, personnes).
+- **Favoris** : ajout/suppression et affichage des contenus favoris liés à l’utilisateur connecté.
+- **Commentaires** : consultation/ajout de commentaires sur une fiche film/série (si connecté).
+- **Authentification** : inscription/connexion via API mock avec token.
+- **Paramètres utilisateur** : édition profil et préférences (genres) pour alimenter les recommandations.
+- **Pages personnes** : listing des célébrités populaires + fiches détaillées.
 
-### Analyzing the Bundle Size
+## 6) Technologies utilisées
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Front-end
 
-### Making a Progressive Web App
+- **React 19** : UI et composants.
+- **React Router DOM** : routage côté client.
+- **Redux Toolkit + React Redux** : gestion de l’état global (favoris, commentaires, alertes, listes).
+- **Axios** : requêtes HTTP (notamment API mock) avec interception du token d’auth.
+- **Swiper** : carrousels (dashboard/recommandations).
+- **Recharts** : visualisation de données (graphiques).
+- **CSS** : styles applicatifs.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Back-end local (mock)
 
-### Advanced Configuration
+- **Node.js + Express** : serveur API local.
+- **json-server** : base JSON locale (`db.json`) exposée en API REST.
+- **Authentification token maison (HMAC SHA256)** : endpoints `/register` et `/login` + protection de routes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+### APIs externes
 
-### Deployment
+- **TMDB API** : données films/séries/personnes.
+- **YouTube Data API** : récupération de trailers.
+- **OpenAI API** : essais de recommandations conversationnelles (AI Picks).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## 7) Librairies principales et rôle de chacune
 
-### `npm run build` fails to minify
+- `react`, `react-dom` : rendu de l’application.
+- `react-router-dom` : navigation SPA et paramètres d’URL.
+- `@reduxjs/toolkit`, `react-redux` : store + slices d’état.
+- `axios` : appels API avec intercepteur d’auth.
+- `swiper` : sliders/carrousels.
+- `recharts` : composants graphiques.
+- `express` : serveur HTTP.
+- `json-server` : mock API REST basé sur fichier JSON.
+- `json-server-auth` : dépendance d’auth mock (présente dans le projet).
+- `openai` : intégration IA potentielle côté app.
+- `swagger-jsdoc`, `swagger-ui-express` : outillage de documentation API (dépendances disponibles).
+- `loglevel` : logs client.
+- `concurrently` : exécution simultanée front + API.
+- `serve` : serveur statique pour build de production.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 8) Routes principales (Front)
+
+- `/` : dashboard.
+- `/movies` : liste des films.
+- `/movie-details/:id` : détails d’un film.
+- `/favorites` : favoris utilisateur.
+- `/tv-shows` : liste des séries.
+- `/tv-details/:id` : détails d’une série.
+- `/search/:query` : résultats de recherche.
+- `/persons` : personnes populaires.
+- `/person-details/:personId` : détails d’une personne.
+- `/media-photos/:mediaType/:mediaId` : galerie photos d’un média.
+- `/settings` : paramètres utilisateur.
+- `/register` : inscription.
+- `/login` : connexion.
+- `*` : page Not Found.
+
+## 9) Routes principales (API mock locale)
+
+### Authentification
+
+- `POST /register`
+- `POST /login`
+
+### Ressources protégées (Bearer token requis)
+
+- `/users`
+- `/favorites`
+- `/comments`
+- `/lists` (et `/list`)
+
+## 10) Scripts npm utiles
+
+- `npm start` : lance le front en développement.
+- `npm run server` : lance l’API mock locale.
+- `npm run go` : lance front + API en parallèle.
+- `npm run build` : build de production.
+- `npm run serve:prod` : sert le build React.
+- `npm run server:prod` : lance l’API en mode prod local.
+- `npm run go:prod` : lance front build + API prod local.

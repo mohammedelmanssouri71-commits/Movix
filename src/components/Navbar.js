@@ -6,6 +6,7 @@ import { UserContext } from "../contexts/UserContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../assets/media.png';
+import { clearAuthSession } from '../utils/auth';
 
 export default function Navbar(){
     const [showProfil,setShowProfil] = useState(false);
@@ -15,7 +16,7 @@ export default function Navbar(){
 
     function logout(){
         setUser(null);
-        localStorage.removeItem("userId");
+        clearAuthSession();
         navigate("/movies");
     }
 
@@ -44,7 +45,7 @@ export default function Navbar(){
             </nav>
             <div>
                 {/* <button className="btn-pick"><i class="fa-solid fa-robot"></i> AI Picks</button> */}
-                <button><i class="fa-regular fa-moon"></i></button>
+                {/* <button><i class="fa-regular fa-moon"></i></button> */}
                 {user && <button onClick={() => logout()}><i class="fa-solid fa-arrow-right-from-bracket"></i></button> }
                 {user ? <button onClick={(e) => {
                     e.stopPropagation();
