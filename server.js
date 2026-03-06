@@ -1,38 +1,30 @@
 const express = require("express");
-const swaggerUi = require("swagger-ui-express");
-const swaggerJsDoc = require("swagger-jsdoc");
 const jsonServer = require("json-server");
+const auth = require("json-server-auth");
 const path = require("path");
 
 const app = express();
-app.use(express.json());
-
-// === json-server ===
 const router = jsonServer.router(path.join(__dirname, "db.json"));
-app.use("/api", router); // tous les endpoints json-server sont sous /api
+const middlewares = jsonServer.defaults();
 
-// === Swagger ===
-const swaggerOptions = {
-  swaggerDefinition: {
-    openapi: "3.0.0",
-    info: {
-      title: "Favorite API",
-      version: "1.0.0",
-      description: "API REST pour gérer les favoris",
-    },
-    servers: [
-      { url: "http://localhost:3001/api", description: "Local json-server" },
-    ],
-  },
-  apis: [path.join(__dirname, "swagger.yaml")], // fichier YAML
-};
+app.db = router.db;
 
-const swaggerDocs = swaggerJsDoc(swaggerOptions);
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+const rules = auth.rewriter({
+  "/users*": 660,
+  "/favorites*": 660,
+  "/comments*": 660,
+  "/lists*": 660,
+  "/list*": 660,
+});
 
-// === Lancer le serveur ===
+app.use(middlewares);
+app.use(express.json());
+app.use(rules);
+app.use(auth);
+app.use(router);
+
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Swagger UI available on http://localhost:${PORT}/api-docs`);
+  console.log(`Mock API with JWT auth running on http://localhost:${PORT}`);
+  console.log("Auth endpoints available: POST /register and POST /login");
 });
