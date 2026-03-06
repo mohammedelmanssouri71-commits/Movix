@@ -45,7 +45,7 @@ export default function Navbar(){
             </nav>
             <div>
                 {/* <button className="btn-pick"><i class="fa-solid fa-robot"></i> AI Picks</button> */}
-                <button><i class="fa-regular fa-moon"></i></button>
+                {/* <button><i class="fa-regular fa-moon"></i></button> */}
                 {user && <button onClick={() => logout()}><i class="fa-solid fa-arrow-right-from-bracket"></i></button> }
                 {user ? <button onClick={(e) => {
                     e.stopPropagation();
