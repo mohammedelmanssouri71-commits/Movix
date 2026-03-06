@@ -1,23 +1,293 @@
 {
-  "users": [],
+  "users": [
+    {
+      "id": "64b2",
+      "fullName": "Mohamed El Mansouri",
+      "username": "simo_7",
+      "password": "2003",
+      "image": "https://i.pinimg.com/736x/25/58/8b/25588ba1c76866f9abff41a7375a1206.jpg",
+      "preferences": {
+        "tv": [
+          10768,
+          10767,
+          10764,
+          16
+        ],
+        "movie": [
+          16,
+          10752,
+          36,
+          28,
+          99
+        ]
+      }
+    },
+    {
+      "id": "377c",
+      "fullName": "Ali Hamada",
+      "username": "moha_7",
+      "password": "2003",
+      "image": "https://i.pinimg.com/736x/e6/2c/99/e62c990d455d73615636590dcfe515a3.jpg",
+      "preferences": {
+        "tv": [
+          10759,
+          80
+        ],
+        "movie": [
+          80,
+          10752,
+          878
+        ]
+      }
+    },
+    {
+      "id": "cec3",
+      "fullName": "El halimi",
+      "username": "yamada",
+      "password": "2003",
+      "image": "https://i.pinimg.com/736x/c0/04/8a/c0048aa7cee2613757729ce3759a7443.jpg",
+      "preferences": {
+        "tv": [
+          10759
+        ],
+        "movie": [
+          16,
+          14,
+          80,
+          18
+        ]
+      }
+    }
+  ],
   "favorites": [
     {
-      "id": "689d",
-      "userId": 1,
-      "type": "movie",
-      "typeId": 497370
+      "id": "9578",
+      "userId": "377c",
+      "media_type": "tv",
+      "media": {
+        "id": 209867,
+        "poster_path": "/dqZENchTd7lp5zht7BdlqM7RBhD.jpg",
+        "name": "Frieren: Beyond Journey's End"
+      }
     },
     {
-      "id": "ca21",
-      "userId": 1,
-      "type": "movie",
-      "typeId": 11332
+      "id": "d61b",
+      "userId": "377c",
+      "media_type": "tv",
+      "media": {
+        "id": 63333,
+        "poster_path": "/8eJf0hxgIhE6QSxbtuNCekTddy1.jpg",
+        "name": "The Last Kingdom"
+      }
     },
     {
-      "id": "17b4",
-      "userId": 1,
-      "type": "tv",
-      "typeId": 94605
+      "id": "dca8",
+      "userId": "377c",
+      "media_type": "movie",
+      "media": {
+        "id": 238,
+        "poster_path": "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+        "title": "The Godfather"
+      }
+    },
+    {
+      "id": "250a",
+      "userId": "377c",
+      "media_type": "tv",
+      "media": {
+        "id": 94605,
+        "poster_path": "/fqldf2t8ztc9aiwn3k6mlX3tvRT.jpg",
+        "name": "Arcane"
+      }
+    },
+    {
+      "id": "65e3",
+      "userId": "377c",
+      "media_type": "movie",
+      "media": {
+        "id": 424,
+        "poster_path": "/sF1U4EUQS8YHUYjNl3pMGNIQyr0.jpg",
+        "title": "Schindler's List"
+      }
+    },
+    {
+      "id": "b0a2",
+      "userId": "377c",
+      "media_type": "movie",
+      "media": {
+        "id": 1315303,
+        "poster_path": "/57cyAMc9c8iveudogTRuDOQjujn.jpg",
+        "title": "Primate"
+      }
+    },
+    {
+      "id": "5070",
+      "userId": "377c",
+      "media_type": "movie",
+      "media": {
+        "id": 238,
+        "poster_path": "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+        "title": "The Godfather"
+      }
+    },
+    {
+      "id": "d3a2",
+      "userId": "cec3",
+      "media_type": "tv",
+      "media": {
+        "id": 2327,
+        "poster_path": "/arT93dBemanftfWTcf9I0JRIlxU.jpg",
+        "name": "Dawson's Creek"
+      }
+    }
+  ],
+  "list": [],
+  "comments": [
+    {
+      "id": "dd93",
+      "userId": "377c",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "It is a good movie",
+      "likes": [],
+      "date": "2/8/2026, 4:10:29 PM"
+    },
+    {
+      "id": "6d5d",
+      "userId": "377c",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "Nothing is great as this movie",
+      "likes": [],
+      "date": "2/8/2026, 4:10:52 PM"
+    },
+    {
+      "id": "040d",
+      "userId": "64b2",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "Cold",
+      "likes": [
+        "64b2"
+      ],
+      "date": "2/8/2026, 4:13:57 PM"
+    },
+    {
+      "id": "a161",
+      "userId": "64b2",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "Ui",
+      "likes": [
+        "64b2",
+        "377c"
+      ],
+      "date": "2/8/2026, 4:14:03 PM"
+    },
+    {
+      "id": "75b9",
+      "userId": "64b2",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "ANa",
+      "likes": [],
+      "date": "2/8/2026, 5:03:23 PM"
+    },
+    {
+      "id": "8cc9",
+      "userId": "64b2",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "Ggdufyw",
+      "likes": [
+        "64b2",
+        "377c"
+      ],
+      "date": "2/8/2026, 5:12:03 PM"
+    },
+    {
+      "id": "ad76",
+      "userId": "377c",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "Spanning the years 1945 to 1955, a chronicle of the fictional Italian-American Corleone crime family. When organized crime family patriarch",
+      "likes": [
+        "377c"
+      ],
+      "date": "2/8/2026, 5:19:27 PM"
+    },
+    {
+      "id": "8aad",
+      "userId": "377c",
+      "media": {
+        "id": 209867,
+        "type": "tv"
+      },
+      "message": "Anime",
+      "likes": [
+        "377c"
+      ],
+      "date": "2/8/2026, 9:24:19 PM"
+    },
+    {
+      "id": "7479",
+      "userId": "377c",
+      "media": {
+        "id": 94605,
+        "type": "tv"
+      },
+      "message": "Baby cartoon",
+      "likes": [],
+      "date": "2/8/2026, 9:37:03 PM"
+    },
+    {
+      "id": "5592",
+      "userId": "377c",
+      "media": {
+        "id": 94605,
+        "type": "tv"
+      },
+      "message": "The hunt is on",
+      "likes": [],
+      "date": "2/8/2026, 9:37:29 PM"
+    },
+    {
+      "id": "1afc",
+      "userId": "377c",
+      "media": {
+        "id": 238,
+        "type": "movie"
+      },
+      "message": "El halimi",
+      "likes": [],
+      "date": "2/14/2026, 5:52:06 PM"
+    },
+    {
+      "id": "b3c4",
+      "userId": "cec3",
+      "media": {
+        "id": 95603,
+        "type": "tv"
+      },
+      "message": "So9k 5awi",
+      "likes": [
+        "cec3"
+      ],
+      "date": "2/14/2026, 5:58:22 PM"
     }
   ]
 }

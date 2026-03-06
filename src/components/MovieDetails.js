@@ -5,19 +5,34 @@ import Cast from "./Cast";
 import AsideDetails from "./AsideDetails";
 import Trailer from "./Trailer";
 import SimilarMovies from "./SimilarMovies";
+import { addFavorite } from '../slices/favoriteSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import Loader from "./Loader";
+import VoteModal from "./VoteModal";
+import { UserContext } from '../contexts/UserContext';
+import { useContext } from 'react';
+import { show, hide } from "../slices/alertSlice";
+import CommentsList from "./CommentsList";
 
 export default function MovieDetails(){ 
     const API_KEY = process.env.REACT_APP_API_KEY;
     const API_KEY_YOUTUBE = process.env.REACT_APP_API_KEY_YOUTUBE;
+    const JSON_API_URL = process.env.REACT_APP_JSON_API_URL;
     const BASE_URL = process.env.REACT_APP_BASE_URL;
     const IMAGE_BASE_URL = process.env.REACT_APP_IMAGE_BASE_URL;
+    const dispatch = useDispatch();
+    const {user, setUser} = useContext(UserContext);
+    const favorites = useSelector((state) => state.favorites.value);
 
     const {id} = useParams();
     const [movie, setMovie] = useState({});
     const [credits, setCredits] = useState({});
     const [crew, setCrew] = useState([]);
     const [showTrailer, setShowTrailer] = useState(false);
+    const [showComments, setShowComments] = useState(false);
     const [videoId, setVideoId] = useState(null);
+    const [loading, setLoading] = useState(true);
     const principalJobs = ['Director', "Writer", "Screenplay", "Story", "Producer"];
 
     const trailerContainer = useRef();
@@ -33,22 +48,45 @@ export default function MovieDetails(){
             .then(([movieData, creditsData]) => {
             setMovie(movieData);
             setCredits(creditsData);
-
             setCrew(creditsData.crew.filter(c => principalJobs.includes(c.job)));
             })
             .catch(error => {
             console.error("Erreur API :", error);
             })
+            .finally(() => {
+                setLoading(false);
+            })
 
 }, [id, API_KEY]);
 
-
+    if (loading) return <Loader/>
     const uniqueCrew = Object.values(
         crew.reduce((acc, cur) => {
             acc[cur.id] ??= cur;
             return acc;
         }, {})
     );
+
+    function favAlreadyExist(){
+        if (user){
+            if (favorites.find(mv => mv.media.id === movie.id && mv.media_type === "movie" && user.id === mv.userId)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    async function addFav(movie) {
+        try {
+            const res = await axios.post(`${JSON_API_URL}/favorites`, {userId: user.id, media_type: "movie", media: movie});
+            dispatch(addFavorite({userId: user.id, media_type: "movie", media: movie}));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     function handleTrailer(){
         const query = movie.title + " Movie Officiel Trailer";
         fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=${query}&key=${API_KEY_YOUTUBE}`)
@@ -72,8 +110,8 @@ export default function MovieDetails(){
 
     return (
         <div className="movie">
-            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/w500${movie.backdrop_path? movie.backdrop_path:movie.poster_path})`}}>
-                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/w500${movie.poster_path? movie.poster_path:movie.backdrop_path}`} alt="poster" loading="lazy"/></a>
+            <div style={{backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path? movie.backdrop_path:movie.poster_path})`}}>
+                <a href={movie.homepage}><img src={`https://image.tmdb.org/t/p/original${movie.poster_path? movie.poster_path:movie.backdrop_path}`} alt="poster" loading="lazy"/></a>
                 <div className="details">
                     <h2>{movie.title} -{movie.release_date && new Date(movie.release_date).getFullYear()}-</h2>
                     <div className="general-infos">
@@ -111,16 +149,50 @@ export default function MovieDetails(){
                     </div>
                 </div>
                 <div className="actions">
+                    <Link className="link" to={`/media-photos/movie/${movie.id}`}><button><i class="fa-solid fa-photo-film"></i></button></Link>
                     <button><i class="fa-solid fa-list"></i></button>
-                    <button><i class="fa-solid fa-heart"></i></button>
+                    <button onClick={() => {
+                        if(user){
+                            if(!favAlreadyExist()){
+                                dispatch(show({type: "success", message: `You are added ${movie.title} to your favorites!`}));
+                                addFav({id: movie.id, poster_path: movie.poster_path, title:  movie.title});
+                            }else{
+                                dispatch(show({type: "error", message: `${movie.title} is already a favourite movie!`}));
+                            }
+                            setTimeout(() => {
+                                dispatch(hide());
+                            },2500)
+                        }else{
+                            dispatch(show({type: "info", message: "Please log in to add a new favorite!"}));
+                            setTimeout(() => {
+                                dispatch(hide());
+                            },2500)
+                        }
+                    }}><i class="fa-solid fa-heart" style={{color: favAlreadyExist() ?"red":"white"}}></i></button>
                     <button onClick={handleTrailer}><i class="fa-solid fa-play"></i></button>
-                    <button className="btn-return"><Link to={"/movies"} className="link"><i class="fa-solid fa-arrow-left"></i></Link></button>
+                    <button onClick={() => {
+                        if(user){
+                            setShowComments(true);
+                        }else{
+                            dispatch(show({type: "info", message: "Please log in to view the comments section!"}));
+                            setTimeout(() => {
+                                dispatch(hide());
+                            },2500)
+                        }
+                    }}><i class="fa-solid fa-comment"></i></button>
+                    <Link to={"/movies"} className="link"><button className="btn-return"><i class="fa-solid fa-arrow-left"></i></button></Link>
                 </div>
             </div>
             <div className="trailer" ref={trailerContainer}>
                 {showTrailer && <Trailer videoId={videoId}/>}
                 <button className="close-btn" onClick={handleClose}><i class="fa-solid fa-xmark"></i></button>
             </div>
+            {showComments &&  
+            <div className="comments-container">
+                <CommentsList media={{id: movie.id, type:'movie'}}/>
+                <button className="close-btn" onClick={() => setShowComments(false)}><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            }
             <div>
                 <Cast cast={credits.cast || []}/>
                 <AsideDetails/>

@@ -4,9 +4,14 @@ import { addFavorite } from '../slices/favoriteSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import { type } from '@testing-library/user-event/dist/type';
+import { UserContext } from '../contexts/UserContext';
+import { useContext } from 'react';
+import { show, hide } from "../slices/alertSlice";
 
 export default function MovieCard({movie}){
     const JSON_API_URL = process.env.REACT_APP_JSON_API_URL;
+    const {user, setUser} = useContext(UserContext);
+    const favorites = useSelector(state => state.favorites.value);
 
     const dispatch = useDispatch();
     let review = Number((movie.vote_average / 2).toFixed(2));
@@ -20,10 +25,23 @@ export default function MovieCard({movie}){
     if (review % 2 !== 0){
         stars.push(<i class="fa-solid fa-star-half-stroke" key={i}></i>);
     }
+
+    function favAlreadyExist(){
+        if (user){
+            if (favorites.find(mv => mv.media.id === movie.id && mv.media_type === "movie" && user.id === mv.userId)){
+                return true;
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
     async function addFav(movie) {
         try {
-            const res = await axios.post(`${JSON_API_URL}/favorites`, {userId: 1, type: "movie", typeId: movie.id});
-            dispatch(addFavorite({userId: 1, type: "movie", typeId: movie.id}));
+            const res = await axios.post(`${JSON_API_URL}/favorites`, {userId: user.id, media_type: "movie", media: movie});
+            dispatch(addFavorite({userId: user.id, media_type: "movie", media: movie}));
         } catch (error) {
             console.log(error);
         }
@@ -31,11 +49,10 @@ export default function MovieCard({movie}){
     }
     return (
         <div className='movie-card' key={movie.id}>
-            <Link to={`/movies-details/${movie.id}`}><img src={movie.backdrop_path ? `https://image.tmdb.org/t/p/w500${movie.backdrop_path}.` : `https://image.tmdb.org/t/p/w500${movie.poster_path}.`} alt="cover" loading='lazy'/></Link>
+            <Link to={`/movie-details/${movie.id}`}><img src={movie.backdrop_path ? `https://image.tmdb.org/t/p/original${movie.backdrop_path}.` : `https://image.tmdb.org/t/p/original${movie.poster_path}.`} alt="cover" loading='lazy'/></Link>
             <div className='movie-details'>
                 <h3>{movie.title}</h3>
                 <p className='senarist'>{movie.release_date}</p>
-                <p className='time'>{movie.vote_average.toFixed(2)}/10</p>
                 <div>
                     {stars}
                 </div>
@@ -43,7 +60,17 @@ export default function MovieCard({movie}){
                     {/* {labels} */}
                 </div>
             </div>
-            <button onClick={() => addFav(movie)}><i class="fa-regular fa-heart"></i></button>
+            <button onClick={() => {
+                if(!favAlreadyExist()){
+                    dispatch(show({type: "success", message: `You are added ${movie.title} to your favorites!`}));
+                    addFav({id: movie.id, poster_path: movie.poster_path, title:  movie.title});
+                }else{
+                    dispatch(show({type: "error", message: `${movie.title} is already a favourite movie!`}));
+                }
+                setTimeout(() => {
+                    dispatch(hide());
+                },2500)
+            }}><i class="fa-regular fa-heart" style={{color: favAlreadyExist()?"red":"white"}}></i></button>
         </div>
     )
 }
